@@ -167,7 +167,7 @@
   - 方向：北，往 [2] 天神橋筋六丁目方面 / 北千里・高槻市方面
   - 目的地：日本橋（K17）
 ### 道頓堀 / 千日前 / 戎橋筋 / 心齋橋
-![](https://i.imgur.com/akOgybt.jpeg)
+![](https://www.howto-osaka.com/global/img/special/guide/railway/nankaiallline2daypass/namba/map2-tc.png?171011)
   - 晚餐
 
 ## 20:29 從M19-心斎橋站返回飯店
