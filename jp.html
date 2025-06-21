@@ -1119,57 +1119,80 @@
       </section>
     </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const dayHeaders = document.querySelectorAll(".day-header");
-        const infoHeader = document.getElementById("info-header");
-        const infoContent = document.getElementById("content-info");
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dayHeaders = document.querySelectorAll(".day-header");
+    const infoHeader = document.getElementById("info-header");
+    const infoContent = document.getElementById("content-info");
 
-        // Function to check if any day header is expanded
-        function isAnyDayExpanded() {
-          return Array.from(dayHeaders).some(header => header.classList.contains("expanded"));
+    // Function to collapse all day contents
+    function collapseAllDays(except = null) {
+      dayHeaders.forEach((header) => {
+        const contentId = header.id.replace("day", "content-");
+        const content = document.getElementById(contentId);
+
+        if (header !== except) {
+          header.classList.remove("expanded");
+          content.classList.remove("expanded");
         }
-
-        // Function to collapse INFO section
-        function collapseInfo() {
-          infoHeader.classList.remove("expanded");
-          infoContent.classList.remove("expanded");
-        }
-
-        // Function to expand INFO section
-        function expandInfo() {
-          infoHeader.classList.add("expanded");
-          infoContent.classList.add("expanded");
-        }
-
-        // Toggle functionality for day headers
-        dayHeaders.forEach((header) => {
-          header.addEventListener("click", function () {
-            this.classList.toggle("expanded");
-            const dayId = this.id.replace("day", "content-");
-            const content = document.getElementById(dayId);
-            content.classList.toggle("expanded");
-
-            // Collapse INFO if any day header is expanded
-            if (isAnyDayExpanded()) {
-              collapseInfo();
-            } else {
-              // Expand INFO if no day headers are expanded
-              expandInfo();
-            }
-          });
-        });
-
-        // Toggle functionality for INFO header
-        infoHeader.addEventListener("click", function () {
-          this.classList.toggle("expanded");
-          infoContent.classList.toggle("expanded");
-        });
-
-        // Initialize with INFO section expanded and all day sections collapsed
-        expandInfo();
       });
-    </script>
+    }
+
+    // Function to check if any day header is expanded
+    function isAnyDayExpanded() {
+      return Array.from(dayHeaders).some((header) =>
+        header.classList.contains("expanded")
+      );
+    }
+
+    // INFO section control
+    function collapseInfo() {
+      infoHeader.classList.remove("expanded");
+      infoContent.classList.remove("expanded");
+    }
+
+    function expandInfo() {
+      infoHeader.classList.add("expanded");
+      infoContent.classList.add("expanded");
+    }
+
+    // Toggle functionality for day headers
+    dayHeaders.forEach((header) => {
+      header.addEventListener("click", function () {
+        const contentId = this.id.replace("day", "content-");
+        const content = document.getElementById(contentId);
+
+        const isExpanded = this.classList.contains("expanded");
+
+        // 先全部關閉
+        collapseAllDays();
+
+        if (!isExpanded) {
+          // 如果目前不是展開狀態，才展開這一組
+          this.classList.add("expanded");
+          content.classList.add("expanded");
+        }
+
+        // INFO區塊邏輯：若有任何 day 被展開就收合 INFO，否則展開 INFO
+        if (isAnyDayExpanded()) {
+          collapseInfo();
+        } else {
+          expandInfo();
+        }
+      });
+    });
+
+    // INFO toggle 不受 day 區塊影響
+    infoHeader.addEventListener("click", function () {
+      this.classList.toggle("expanded");
+      infoContent.classList.toggle("expanded");
+    });
+
+    // 預設啟動時 INFO 展開、全部 day 區塊關閉
+    expandInfo();
+    collapseAllDays();
+  });
+</script>
   </body>
   <footer style="background-color: #1e1e1e; width: 100%; height: 2.3em; text-align: center; position: relative; padding-top: 3px;">
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; "></div>
